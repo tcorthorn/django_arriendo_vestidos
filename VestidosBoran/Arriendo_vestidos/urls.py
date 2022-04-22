@@ -27,7 +27,7 @@ urlpatterns = [
 # Use include() to add paths from the catalog application
 
 urlpatterns += [
-    path('catalogo/', include('catalogo.urls')),
+    path('', include('catalogo.urls')),
 ]
 
 #Add URL maps to redirect the base URL to our application

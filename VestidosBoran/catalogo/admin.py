@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Proveedor, Categoria, Vestido, Arriendo_vestido, Cliente
+from .models import Proveedor, Categoria, Catalogo_Vestido, Vestidos_para_arriendo, Cliente
 
 # Define the admin class
 class ProveedorAdmin(admin.ModelAdmin):
@@ -10,20 +10,20 @@ admin.site.register(Proveedor, ProveedorAdmin)
 
 # Register the Admin classes for Vestido using the decorator
 
-class Arriendo_vestidoInline(admin.TabularInline):
-    model = Arriendo_vestido
+class Vestidos_para_arriendoinline(admin.TabularInline):
+    model = Vestidos_para_arriendo
 
-@admin.register(Vestido)
-class VestidoAdmin(admin.ModelAdmin):
+@admin.register(Catalogo_Vestido)
+class Catalogo_VestidoAdmin(admin.ModelAdmin):
     list_display = ('nombre','display_categoria', 'proveedor')
-    inlines = [Arriendo_vestidoInline]
+    inlines = [Vestidos_para_arriendoinline]
 
 
 
 # Register the Admin classes for BookInstance using the decorator
 
-@admin.register(Arriendo_vestido)
-class Arriendo_vestidoAdmin(admin.ModelAdmin):
+@admin.register(Vestidos_para_arriendo)
+class Vestidos_para_arriendoAdmin(admin.ModelAdmin):
     list_display = ('vestido','fecha_devolucion')
 
     fieldsets = (
