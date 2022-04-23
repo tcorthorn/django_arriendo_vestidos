@@ -1,52 +1,57 @@
 from django.contrib import admin
-from .models import Proveedor, Categoria, Catalogo_Vestido, Vestidos_para_arriendo, Cliente
+from .models import Proveedor, Categoria, Catalogo, Arriendo_y_Devolucion, Cliente,Talla
 
 # Define the admin class
 class ProveedorAdmin(admin.ModelAdmin):
-    list_display = ('apellidos', 'nombre', 'email', 'telefono')
+    list_display = ('nombre', 'email', 'telefono')
    
 # Register the admin class with the associated model
 admin.site.register(Proveedor, ProveedorAdmin)
 
-# Register the Admin classes for Vestido using the decorator
+# Register the Admin classes for Vestidos_para arriendo using the decorator
 
-class Vestidos_para_arriendoinline(admin.TabularInline):
-    model = Vestidos_para_arriendo
+class Arriendo_y_Devolucioninline(admin.TabularInline):
+    model = Arriendo_y_Devolucion
 
-@admin.register(Catalogo_Vestido)
-class Catalogo_VestidoAdmin(admin.ModelAdmin):
+@admin.register(Catalogo)
+class CatalogoAdmin(admin.ModelAdmin):
     list_display = ('nombre','display_categoria', 'proveedor')
-    inlines = [Vestidos_para_arriendoinline]
-
-
+    inlines = [Arriendo_y_Devolucioninline]
 
 # Register the Admin classes for BookInstance using the decorator
 
-@admin.register(Vestidos_para_arriendo)
-class Vestidos_para_arriendoAdmin(admin.ModelAdmin):
-    list_display = ('vestido','fecha_devolucion')
-
+@admin.register(Arriendo_y_Devolucion)
+class Arriendo_y_DevolucionAdmin(admin.ModelAdmin):
+    list_display = ('vestido','cliente', 'status','fecha_a_devolver', 'devuelto')
+    
     fieldsets = (
         (None, {
-            'fields': ('vestido', 'id')
+            'fields': ('vestido', 'id', 'cliente')
         }),
-        ('Disponibilidad', {
-            'fields': ('status', 'fecha_devolucion')
+        
+        ('Arriendo', {
+            'fields': ('fecha_a_devolver',)
+        }),    
+        ('Devolucion', {
+            'fields': ('devuelto',)
         }),
+        ('Disponibilidad Actualizada', {
+            'fields': ('status', )
+        }),
+
     )
 
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('apellidos', 'nombre', 'email', 'telefono')
+    list_display = ('nombre','apellidos', 'email', 'telefono')
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
 
+@admin.register(Talla)
+class TallaAdmin(admin.ModelAdmin):
+    list_display = ('talla',)
 
-#admin.site.register(Vestido)
-#admin.site.register(Proveedor)
-#admin.site.register(Categoria)
-#admin.site.register(Arriendo_vestido)
-#admin.site.register(Cliente)
+
