@@ -17,8 +17,6 @@ def index(request):
     vestidos_mantencion=Vestido.objects.filter(status='m').count()
     vestidos_reservados=Vestido.objects.filter(status='r').count()
 
-    proveedores=Proveedor.objects.count()  # El 'all()' esta implícito por defecto.
-
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
         request,
@@ -30,7 +28,6 @@ def index(request):
         'vestidos_arrendados':vestidos_arrendados,
         'vestidos_mantencion':vestidos_mantencion,
         'vestidos_reservados':vestidos_reservados,
-        'proveedores':proveedores, 
         }
     )
 

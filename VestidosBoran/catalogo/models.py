@@ -26,6 +26,7 @@ class Vestido(models.Model):
     detalle = models.TextField(max_length=1000, help_text="Ingrese una descripción del vestido")
     categoria = models.ManyToManyField(Categoria, help_text="Seleccione una categoría para este vestido")
     talla = models.ManyToManyField(Talla, help_text="Seleccione una talla para este vestido")
+    cliente = models.ForeignKey('Cliente', on_delete=models.SET_NULL, null=True,)
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     devuelto = models.DateField(null=True, blank=True , help_text="Fecha cuando devolvió el vestido")
 
