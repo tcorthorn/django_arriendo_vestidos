@@ -31,4 +31,12 @@ def index(request):
         }
     )
 
-    
+from django.views import generic
+
+class VestidoListView(generic.ListView):
+    model = Vestido
+    paginate_by = 10
+
+
+class VestidoDetailView(generic.DetailView):
+    model = Vestido

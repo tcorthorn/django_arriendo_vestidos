@@ -1,4 +1,5 @@
 from pickle import TRUE
+from tkinter import CASCADE
 from django.db import models
 
 # Create your models here.
@@ -17,7 +18,7 @@ class Talla(models.Model):
 
 class Vestido(models.Model):
     nombre= models.CharField(max_length=200)
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.SET_NULL, null=True,default='Otro' , help_text="Opcional")
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE,default='Otro' , help_text="Opcional")
 
     # ForeignKey, ya que un vestido tiene un solo proveedor, pero el mismo proveedor puede haber confeccionado muchos tipos de vestidos.
     # 'Proveedor' es un string, en vez de un objeto, porque la clase Proveedor aún no ha sido declarada.
@@ -26,7 +27,7 @@ class Vestido(models.Model):
     detalle = models.TextField(max_length=1000, help_text="Ingrese una descripción del vestido")
     categoria = models.ManyToManyField(Categoria, help_text="Seleccione una categoría para este vestido")
     talla = models.ManyToManyField(Talla, help_text="Seleccione una talla para este vestido")
-    cliente = models.ForeignKey('Cliente', on_delete=models.SET_NULL, null=True,)
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     devuelto = models.DateField(null=True, blank=True , help_text="Fecha cuando devolvió el vestido")
 
