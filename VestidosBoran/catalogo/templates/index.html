@@ -9,10 +9,17 @@
 
   <p>The library has the following record counts:</p>
   <ul>
-    <li><strong>vestidos:</strong> {{ num_vestidos }}</li>
-    <li><strong>Solicitudes:</strong> {{ num_solicitudes }}</li>
-    <li><strong>Solicitudes disponibles:</strong> {{ num_solicitudes_disponibles }}</li>
-    <li><strong>proveedores:</strong> {{ num_proveedores }}</li>
+    <li><strong>Vestidos:</strong> {{ vestidos }}</li>
+    <li><strong>Clientes:</strong> {{ clientes }}</li>
+
+    <li><strong>Vestidos disponibles:</strong> {{ vestidos_disponibles }}</li>
+    <li><strong>Vestidos arrendados:</strong> {{ vestidos_arrendados }}</li>
+    <li><strong>Vestidos en mantencion:</strong> {{ vestidos_mantencion }}</li>
+    <li><strong>Vestidos reservados:</strong> {{ vestidos_reservados }}</li>
+
+    <li><strong>Proveedores:</strong> {{ proveedores }}</li>
+
+
   </ul>
 
 {% endblock %}

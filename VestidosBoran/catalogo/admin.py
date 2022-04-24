@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Proveedor, Categoria, Catalogo, Arriendo_y_Devolucion, Cliente,Talla
+from .models import Proveedor, Categoria, Vestido, Cliente,Talla
 
 # Define the admin class
 class ProveedorAdmin(admin.ModelAdmin):
@@ -10,38 +10,33 @@ admin.site.register(Proveedor, ProveedorAdmin)
 
 # Register the Admin classes for Vestidos_para arriendo using the decorator
 
+"""
 class Arriendo_y_Devolucioninline(admin.TabularInline):
     model = Arriendo_y_Devolucion
 
-@admin.register(Catalogo)
-class CatalogoAdmin(admin.ModelAdmin):
+@admin.register(Vestido)
+class VestidoAdmin(admin.ModelAdmin):
     list_display = ('nombre','display_categoria', 'proveedor')
     inlines = [Arriendo_y_Devolucioninline]
+"""
 
-# Register the Admin classes for BookInstance using the decorator
-
+# Register the Admin classes for Arriendo_Devolucion using the decorator
+"""
 @admin.register(Arriendo_y_Devolucion)
 class Arriendo_y_DevolucionAdmin(admin.ModelAdmin):
-    list_display = ('vestido','cliente', 'status','fecha_a_devolver', 'devuelto')
+    list_display = ('vestido','cliente','fecha_a_devolver', 'devuelto')
     
     fieldsets = (
-        (None, {
-            'fields': ('vestido', 'id', 'cliente')
-        }),
+        (None, {'fields': ('vestido', 'cliente')}),
         
-        ('Arriendo', {
-            'fields': ('fecha_a_devolver',)
-        }),    
-        ('Devolucion', {
-            'fields': ('devuelto',)
-        }),
-        ('Disponibilidad Actualizada', {
-            'fields': ('status', )
-        }),
+        ('Arriendo', {'fields': ('fecha_a_devolver',)}),   
 
+        ('Devolucion', {'fields': ('devuelto',)}),
+      
+        #('Disponibilidad Actualizada', {'fields': ('cliente', )}),
     )
 
-
+"""
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nombre','apellidos', 'email', 'telefono')
@@ -54,4 +49,7 @@ class CategoriaAdmin(admin.ModelAdmin):
 class TallaAdmin(admin.ModelAdmin):
     list_display = ('talla',)
 
+@admin.register(Vestido)
+class VestidoAdmin(admin.ModelAdmin):
+    list_display = ('nombre','status')
 
