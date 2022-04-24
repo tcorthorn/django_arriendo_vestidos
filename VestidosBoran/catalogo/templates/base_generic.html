@@ -24,7 +24,10 @@
       <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'vestidos' %}">Todos los vestidos</a></li>
-          <li><a href="">Todos los proveedores</a></li>
+          <li><a href="{% url 'arrendados' %}">Todos los arrendados</a></li>
+          <li><a href="{% url 'disponibles' %}">Todos los disponibles</a></li>
+          <li><a href="{% url 'reservados' %}">Todos los reservados</a></li>
+          <li><a href="{% url 'mantencion' %}">Todos los en mantencion</a></li>
       </ul>
      {% endblock %}
       </div>

@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>arrendados</h1>
+
+    {% if arriendo_list %}
+    <ul>
+
+
+      {% for vestido in arriendo_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ vestido.nombre }}</a> ({vestido.cliente}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay vestidos arrendados.</p>
+    {% endif %} 
+{% endblock %}

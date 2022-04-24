@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>En Mantencion</h1>
+
+    {% if mantencion_list %}
+    <ul>
+
+
+      {% for vestido in mantencion_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ vestido.nombre }}</a> ({vestido.cliente}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay vestidos en mantención.</p>
+    {% endif %} 
+{% endblock %}

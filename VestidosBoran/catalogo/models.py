@@ -49,6 +49,8 @@ class Vestido(models.Model):
     def get_absolute_url(self):
         """         Devuelve el URL a una instancia particular de Vestido         """
         return reverse('detalle-vestido', args=[str(self.id)])
+        
+   
 
     def display_categoria(self):
         """"         Creates a string for the Categoría. This is required to display categoria in Admin.        """

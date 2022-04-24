@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Disponibles</h1>
+
+    {% if disponible_list %}
+    <ul>
+
+
+      {% for vestido in disponible_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ vestido.nombre }}</a> ({vestido.cliente}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay vestidos disponibles.</p>
+    {% endif %} 
+{% endblock %}

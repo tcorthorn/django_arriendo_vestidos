@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Reservados</h1>
+
+    {% if reservado_list %}
+    <ul>
+
+
+      {% for vestido in reservado_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ vestido.nombre }}</a> ({vestido.cliente}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay vestidos reservados.</p>
+    {% endif %} 
+{% endblock %}
