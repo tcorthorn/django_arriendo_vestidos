@@ -51,5 +51,5 @@ class TallaAdmin(admin.ModelAdmin):
 
 @admin.register(Vestido)
 class VestidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre','status', 'id','cliente', 'fecha_a_devolver', 'devuelto', 'proveedor')
+    list_display = ('nombre',  'status', 'id','cliente', 'fecha_a_devolver', 'devuelto', 'proveedor')
 

@@ -5,19 +5,12 @@
 
   <p><strong>Cliente:</strong> <a href="">{{ vestido.cliente }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Detalle:</strong> {{ vestido.detalle }}</p>
-  <p><strong>Proveedor:</strong> {{ vestido.proveedor }}</p>
+  <p><strong>Talla:</strong> {{ vestido.talla }}</p>
+  <p><strong>Id:</strong> {{ vestido.id }}</p>
   <p><strong>Status:</strong> {{ vestido.status }}</p>
-  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p><strong>Proveedor:</strong> {{ vestido.proveedor }}</p>
+  <p><strong>Fecha a devolver:</strong> {{ vestido.fecha_a_devolver }}</p>
+  <p><strong>Devuelto:</strong> {{ vestido.devuelto }}</p>
+  <p><strong>Categoria:</strong> {{ vestido.categoria }}</p>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Copies</h4>
-
-    {% for copy in book.bookinstance_set.all %}
-    <hr>
-    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-    {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
-    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
-    <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
-    {% endfor %}
-  </div>
 {% endblock %}
