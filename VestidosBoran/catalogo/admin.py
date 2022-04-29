@@ -40,6 +40,7 @@ class Arriendo_y_DevolucionAdmin(admin.ModelAdmin):
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nombre','apellidos', 'email', 'telefono')
+    list_filter = ('apellidos', 'nombre')
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -51,5 +52,5 @@ class TallaAdmin(admin.ModelAdmin):
 
 @admin.register(Vestido)
 class VestidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre',  'status', 'id','cliente', 'fecha_a_devolver', 'devuelto', 'proveedor')
-
+    list_display = ('nombre',  'status', 'id','cliente', 'fecha_a_devolver', 'devuelto', 'proveedor','display_talla', 'display_categoria')
+    list_filter = ('status','categoria','talla')

@@ -11,10 +11,10 @@ def index(request):
     # Genera contadores de algunos de los objetos principales
     vestidos=Vestido.objects.all().count()
     clientes=Cliente.objects.all().count()
-    vestidos_disponibles=Vestido.objects.filter(status='d').count()
-    vestidos_arrendados=Vestido.objects.filter(status='a').count()
-    vestidos_mantencion=Vestido.objects.filter(status='m').count()
-    vestidos_reservados=Vestido.objects.filter(status='r').count()
+    vestidos_disponibles=Vestido.objects.filter(status='disponible').count()
+    vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
+    vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
+    vestidos_reservados=Vestido.objects.filter(status='reservado').count()
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -35,32 +35,39 @@ from django.views import generic
 class VestidoListView(generic.ListView):
     model = Vestido
     paginate_by = 10
-    
+
+class ClienteListView(generic.ListView):
+    model = Cliente
+    paginate_by = 10 
 
 class VestidoDetailView(generic.DetailView):
     model = Vestido
     paginate_by = 10
 
+class ClienteDetailView(generic.DetailView):
+    model = Cliente
+    paginate_by = 10
+
 class ArrendadoListView(generic.ListView):
     model = Vestido
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='a') #vestidos arrendados
+    queryset = Vestido.objects.filter(status__icontains='arrendado') #vestidos arrendados
     template_name = 'Vestido/arriendo_list.html'  # Specify your own template name/location
 
 class DisponibleListView(generic.ListView):
     model = Vestido
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='d') #vestidos disponibles
+    queryset = Vestido.objects.filter(status__icontains='disponible') #vestidos disponibles
     template_name = 'Vestido/disponible_list.html'  # Specify your own template name/location
 
 class ReservadoListView(generic.ListView):
     model = Vestido
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='r') #vestidos reservados
+    queryset = Vestido.objects.filter(status__icontains='reservado') #vestidos reservados
     template_name = 'Vestido/reservado_list.html'  # Specify your own template name/location
 
 class MantencionListView(generic.ListView):
     model = Vestido
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='m') #vestidos mantencion
+    queryset = Vestido.objects.filter(status__icontains='mantencion') #vestidos mantencion
     template_name = 'Vestido/mantencion_list.html'  # Specify your own template name/location

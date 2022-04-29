@@ -16,6 +16,8 @@ class Talla(models.Model):
     def __str__(self):
         return self.talla
 
+    
+
 class Vestido(models.Model):
     nombre= models.CharField(max_length=200)
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE,default='Otro' , help_text="Opcional")
@@ -27,18 +29,18 @@ class Vestido(models.Model):
     detalle = models.TextField(max_length=1000, help_text="Ingrese una descripción del vestido")
     categoria = models.ManyToManyField(Categoria, help_text="Seleccione una categoría para este vestido")
     talla = models.ManyToManyField(Talla, help_text="Seleccione una talla para este vestido")
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE, default='disponible')
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     devuelto = models.DateField(null=True, blank=True , help_text="Fecha cuando devolvió el vestido")
 
     LOAN_STATUS = (
-        ('m', 'En mantención'),
-        ('a', 'Arrendado'),
-        ('d', 'Disponible'),
-        ('r', 'Reservado'),
+        ('mantencion', 'mantención'),
+        ('arrendado', 'arrendado'),
+        ('disponible', 'disponible'),
+        ('reservado', 'reservado'),
     )
 
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Disponibilidad del vestido')
+    status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
 
     # ManyToManyField, porque una categoria puede contener muchos vestidos y un vestido puede cubrir varias categorías.
     # La clase Categoria ya ha sido definida, entonces podemos especificar el objeto arriba.
@@ -49,8 +51,6 @@ class Vestido(models.Model):
     def get_absolute_url(self):
         """         Devuelve el URL a una instancia particular de Vestido         """
         return reverse('detalle-vestido', args=[str(self.id)])
-        
-   
 
     def display_categoria(self):
         """"         Creates a string for the Categoría. This is required to display categoria in Admin.        """
@@ -59,8 +59,11 @@ class Vestido(models.Model):
 
     def display_talla(self):
         """"         Creates a string for the Talla. This is required to display talla in Admin.        """
-        return ', '.join([ categoria.nombre for categoria in self.categoria.all()[:3] ])
-    display_categoria.short_description = 'Talla'
+        return ', '.join([ talla.talla for talla in self.talla.all()[:3] ])
+    display_talla.short_description = 'Talla'
+
+    class Meta:
+        ordering = ['nombre']
 
 
 """
@@ -118,7 +121,7 @@ class Cliente(models.Model):
         """
         Retorna la url para acceder a una instancia particular de un cliente.
         """
-        return reverse('detalle_cliente', args=[str(self.id)])
+        return reverse('detalle-cliente', args=[str(self.id)])
 
 
     def __str__(self):
@@ -127,4 +130,6 @@ class Cliente(models.Model):
         """
         return '%s, %s' % (self.apellidos, self.nombre)
 
+    class Meta:
+        ordering = ['apellidos']
 

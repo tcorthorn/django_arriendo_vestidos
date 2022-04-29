@@ -1,16 +1,17 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Title: {{ vestido.nombre }}</h1>
+  <h1>Vestido: {{ vestido.nombre }}</h1>
 
-  <p><strong>Cliente:</strong> <a href="">{{ vestido.cliente }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Cliente:</strong> <a href="{% url 'detalle-cliente' vestido.cliente.pk %}">{{ vestido.cliente }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Detalle:</strong> {{ vestido.detalle }}</p>
-  <p><strong>Talla:</strong> {{ vestido.talla }}</p>
+  <p><strong>Talla:</strong> {% for talla in vestido.talla.all %} {{ talla }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   <p><strong>Id:</strong> {{ vestido.id }}</p>
   <p><strong>Status:</strong> {{ vestido.status }}</p>
   <p><strong>Proveedor:</strong> {{ vestido.proveedor }}</p>
   <p><strong>Fecha a devolver:</strong> {{ vestido.fecha_a_devolver }}</p>
   <p><strong>Devuelto:</strong> {{ vestido.devuelto }}</p>
-  <p><strong>Categoria:</strong> {{ vestido.categoria }}</p>
+  <p><strong>Categoria:</strong> {% for categoria in vestido.categoria.all %} {{ categoria }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  
 
 {% endblock %}

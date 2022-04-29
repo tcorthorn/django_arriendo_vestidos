@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Lista de Clientes</h1>
+
+    {% if cliente_list %}
+    <ul>
+
+      {% for cliente in cliente_list %}
+      <li>
+        <a href="{{ cliente.get_absolute_url }}">{{ cliente.apellidos }}</a> ({{cliente.nombre}}) 
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay Clientes.</p>
+    {% endif %} 
+{% endblock %}

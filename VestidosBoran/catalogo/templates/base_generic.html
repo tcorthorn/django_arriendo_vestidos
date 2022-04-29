@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  {% block title %}<title>Local Library</title>{% endblock %}
+  {% block title %}<title>BORANGORA</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,15 +24,35 @@
       <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'vestidos' %}">Todos los vestidos</a></li>
-          <li><a href="{% url 'arrendados' %}">Todos los arrendados</a></li>
-          <li><a href="{% url 'disponibles' %}">Todos los disponibles</a></li>
-          <li><a href="{% url 'reservados' %}">Todos los reservados</a></li>
-          <li><a href="{% url 'mantencion' %}">Todos los en mantencion</a></li>
+          <li><a href="{% url 'clientes' %}">Todos los clientes</a></li>
+          <li><a href="{% url 'arrendados' %}">Vestidos arrendados</a></li>
+          <li><a href="{% url 'disponibles' %}">Vestidos disponibles</a></li>
+          <li><a href="{% url 'reservados' %}">Vestidos reservados</a></li>
+          <li><a href="{% url 'mantencion' %}">Vestidos en mantencion</a></li>
       </ul>
      {% endblock %}
       </div>
       <div class="col-sm-10 ">
       {% block content %}{% endblock %}
+
+
+{% block pagination %}
+  {% if is_paginated %}
+      <div class="pagination">
+          <span class="page-links">
+              {% if page_obj.has_previous %}
+                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">anterior</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">siguiente</a>
+              {% endif %}
+          </span>
+      </div>
+  {% endif %}
+{% endblock %} 
       </div>
     </div>
 
