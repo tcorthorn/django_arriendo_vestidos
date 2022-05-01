@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Proveedor, Categoria, Vestido,  Cliente
+from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo
 
 def index(request):
     """
@@ -44,8 +44,16 @@ class VestidoDetailView(generic.DetailView):
     model = Vestido
     paginate_by = 10
 
+class ProveedorListView(generic.ListView):
+    model = Proveedor
+    paginate_by = 10
+
 class ClienteDetailView(generic.DetailView):
     model = Cliente
+    paginate_by = 10
+
+class ProveedorDetailView(generic.DetailView):
+    model = Proveedor
     paginate_by = 10
 
 class ArrendadoListView(generic.ListView):

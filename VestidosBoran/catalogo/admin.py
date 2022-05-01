@@ -1,56 +1,67 @@
 from django.contrib import admin
-from .models import Proveedor, Categoria, Vestido, Cliente,Talla
+from .models import Arriendo, Proveedor, Categoria, Vestido, Cliente,Talla
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+from datetime import date
+
+class GastosResource(resources.ModelResource):
+    class Meta:
+        model = Proveedor
+        model = Cliente
+        model = Categoria
+        model = Talla
+        model = Vestido
+        model = Arriendo
 
 # Define the admin class
-class ProveedorAdmin(admin.ModelAdmin):
+class ProveedorAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('nombre', 'email', 'telefono')
-   
+    resources_class=Proveedor
+    search_fields=("nombre", )
+    
 # Register the admin class with the associated model
 admin.site.register(Proveedor, ProveedorAdmin)
 
-# Register the Admin classes for Vestidos_para arriendo using the decorator
-
-"""
-class Arriendo_y_Devolucioninline(admin.TabularInline):
-    model = Arriendo_y_Devolucion
-
-@admin.register(Vestido)
-class VestidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre','display_categoria', 'proveedor')
-    inlines = [Arriendo_y_Devolucioninline]
-"""
-
-# Register the Admin classes for Arriendo_Devolucion using the decorator
-"""
-@admin.register(Arriendo_y_Devolucion)
-class Arriendo_y_DevolucionAdmin(admin.ModelAdmin):
-    list_display = ('vestido','cliente','fecha_a_devolver', 'devuelto')
-    
-    fieldsets = (
-        (None, {'fields': ('vestido', 'cliente')}),
-        
-        ('Arriendo', {'fields': ('fecha_a_devolver',)}),   
-
-        ('Devolucion', {'fields': ('devuelto',)}),
-      
-        #('Disponibilidad Actualizada', {'fields': ('cliente', )}),
-    )
-
-"""
 @admin.register(Cliente)
-class ClienteAdmin(admin.ModelAdmin):
+class ClienteAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('nombre','apellidos', 'email', 'telefono')
     list_filter = ('apellidos', 'nombre')
+    resources_class=Cliente
+    search_fields=("nombre", )
 
 @admin.register(Categoria)
-class CategoriaAdmin(admin.ModelAdmin):
+class CategoriaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('nombre',)
+    resources_class=Categoria
+    search_fields=("nombre", )
 
 @admin.register(Talla)
-class TallaAdmin(admin.ModelAdmin):
+class TallaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('talla',)
+    resources_class=Talla
+    search_fields=("nombre", )
+
+#class ArriendoInline(admin.TabularInline):
+    """Defines format of inline book insertion (used in AuthorAdmin)"""
+    #model = Arriendo
 
 @admin.register(Vestido)
-class VestidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre',  'status', 'id','cliente', 'fecha_a_devolver', 'devuelto', 'proveedor','display_talla', 'display_categoria')
-    list_filter = ('status','categoria','talla')
+class VestidoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display = ('sku','nombre',  'status', 'display_talla', 'display_categoria','proveedor' )
+    list_filter = ('status','talla','categoria')
+    resources_class=Vestido
+    search_fields=('fecha_a_devolver', )
+    #inlines = [ArriendoInline]
+
+
+
+@admin.register(Arriendo)
+class ArriendoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display = ('sku','display_cliente','display_cliente2','fecha_inicio_arriendo','fecha_a_devolver','fecha_que_devolvio','valor_pagado','fecha_de_pago','comentario')
+    list_filter = ('fecha_a_devolver','fecha_inicio_arriendo')
+    resources_class=Arriendo
+    search_fields=("cliente", )
+
+    
+
+
