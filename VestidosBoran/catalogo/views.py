@@ -15,6 +15,7 @@ def index(request):
     vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
     vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
     vestidos_reservados=Vestido.objects.filter(status='reservado').count()
+    proveedores=Proveedor.objects.all().count()
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -23,6 +24,7 @@ def index(request):
         context={
         'vestidos':vestidos,
         'clientes':clientes,
+        'proveedores':proveedores,
         'vestidos_disponibles':vestidos_disponibles, 
         'vestidos_arrendados':vestidos_arrendados,
         'vestidos_mantencion':vestidos_mantencion,
