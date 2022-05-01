@@ -84,6 +84,7 @@ class Cliente(models.Model):
     """
     nombre = models.CharField(max_length=100)
     apellidos= models.CharField(max_length=100)
+    rut =models.CharField(max_length=12)
     email = models.EmailField()
     telefono = models.CharField(max_length=10)
 
@@ -114,6 +115,15 @@ class Arriendo(models.Model):
     valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
     fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
     comentario = models.CharField(max_length=500, null=True,blank=True)
+
+    LOAN_STATUS = (
+        ('mantencion', 'mantención'),
+        ('arrendado', 'arrendado'),
+        ('disponible', 'disponible'),
+        ('reservado', 'reservado'),
+        ('devuelto', 'devuelto'),
+    )
+    status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
     
 
     @property

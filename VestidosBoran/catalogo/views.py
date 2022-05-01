@@ -11,11 +11,13 @@ def index(request):
     # Genera contadores de algunos de los objetos principales
     vestidos=Vestido.objects.all().count()
     clientes=Cliente.objects.all().count()
-    vestidos_disponibles=Vestido.objects.filter(status='disponible').count()
-    vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
-    vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
-    vestidos_reservados=Vestido.objects.filter(status='reservado').count()
     proveedores=Proveedor.objects.all().count()
+
+    vestidos_disponibles=Arriendo.objects.filter(status='disponible').count()
+    vestidos_arrendados=Arriendo.objects.filter(status='arrendado').count()
+    vestidos_mantencion=Arriendo.objects.filter(status='mantencion').count()
+    vestidos_reservados=Arriendo.objects.filter(status='reservado').count()
+    vestidos_devueltos=Arriendo.objects.filter(status='devuelto').count()
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -29,6 +31,7 @@ def index(request):
         'vestidos_arrendados':vestidos_arrendados,
         'vestidos_mantencion':vestidos_mantencion,
         'vestidos_reservados':vestidos_reservados,
+        'vestidos_devueltos':vestidos_devueltos,
         }
     )
 
@@ -81,3 +84,9 @@ class MantencionListView(generic.ListView):
     paginate_by = 10
     queryset = Vestido.objects.filter(status__icontains='mantencion') #vestidos mantencion
     template_name = 'Vestido/mantencion_list.html'  # Specify your own template name/location
+
+class DevueltoListView(generic.ListView):
+    model = Arriendo
+    paginate_by = 10
+    queryset = Arriendo.objects.filter(status__icontains='devuelto') #vestidos devueltos
+    template_name = 'Arriendo/devuelto_list.html'  # Specify your own template name/location

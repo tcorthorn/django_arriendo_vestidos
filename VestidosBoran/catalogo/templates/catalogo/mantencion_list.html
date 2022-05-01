@@ -6,10 +6,9 @@
     {% if mantencion_list %}
     <ul>
 
-
       {% for vestido in mantencion_list %}
       <li>
-        <a href="{{ book.get_absolute_url }}">{{ vestido.nombre }}</a> ({vestido.cliente}})
+        <a href="{{ vestido.get_absolute_url }}">{{ vestido.nombre }}</a> ({{vestido.sku}})
       </li>
       {% endfor %}
 
