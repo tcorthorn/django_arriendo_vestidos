@@ -61,11 +61,15 @@ class ProveedorDetailView(generic.DetailView):
     model = Proveedor
     paginate_by = 10
 
-class ArrendadoListView(generic.ListView):
-    model = Vestido
+class ArrendadoDetailView(generic.DetailView):
+    model = Arriendo
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='arrendado') #vestidos arrendados
-    template_name = 'Vestido/arriendo_list.html'  # Specify your own template name/location
+
+class ArrendadoListView(generic.ListView):
+    model = Arriendo
+    paginate_by = 10
+    queryset = Arriendo.objects.filter(status__icontains='arrendado') #vestidos arrendados
+    template_name = 'Arriendo/arriendo_list.html'  # Specify your own template name/location
 
 class DisponibleListView(generic.ListView):
     model = Vestido

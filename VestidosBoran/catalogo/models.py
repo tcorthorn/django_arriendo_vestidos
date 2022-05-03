@@ -1,6 +1,7 @@
 from msilib.schema import Class
 from pickle import TRUE
 from tkinter import CASCADE
+from venv import create
 from django.db import models
 from django.urls import reverse
 from datetime import date
@@ -114,6 +115,8 @@ class Arriendo(models.Model):
     fecha_que_devolvio = models.DateField(null=True, blank=True , help_text="Fecha que devolvió el vestido")
     valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
     fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
+    creado= models.DateTimeField(auto_now_add=True)
+    modificado= models.DateTimeField(auto_now_add=True)
     comentario = models.CharField(max_length=500, null=True,blank=True)
 
     LOAN_STATUS = (
@@ -125,6 +128,9 @@ class Arriendo(models.Model):
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
     
+    def get_absolute_url(self):
+        """         Devuelve el URL a una instancia particular de Arriendo         """
+        return reverse('detalle-arriendo', args=[str(self.id)])
 
     @property
     def is_overdue(self):

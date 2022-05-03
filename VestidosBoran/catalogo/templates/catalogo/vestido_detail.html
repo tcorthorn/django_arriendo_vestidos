@@ -1,18 +1,37 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Vestido: {{ vestido.nombre }}</h1>
+  <h2>Vestido: {{ vestido.nombre }}</h2>
 
-  <p><strong>Proveedor:</strong> <a href="{% url 'detalle-proveedor' vestido.id %}">{{ vestido.proveedor }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Proveedor:</strong> <a href="{% url 'detalle-proveedor' vestido.proveedor.id %}">{{ vestido.proveedor }}</a></p> <!-- author detail link not yet defined -->
 
   <p><strong>Detalle:</strong> {{ vestido.detalle }}</p>
   <p><strong>Talla:</strong> {% for talla in vestido.talla.all %} {{ talla }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-  <p><strong>Id:</strong> {{ vestido.id }}</p>
-  <p><strong>Status:</strong> {{ vestido.status }}</p>
+  <p><strong>Sku:</strong> {{ vestido.sku }}</p>
+  <!--<p><strong>Status:</strong> {{ vestido.status }}</p> -->
   <p><strong>Proveedor:</strong> {{ vestido.proveedor }}</p>
   <!--<p><strong>Fecha a devolver:</strong> {{ vestido.fecha_a_devolver }}</p>
   <p><strong>Devuelto:</strong> {{ vestido.devuelto }}</p> -->
   <p><strong>Categoria:</strong> {% for categoria in vestido.categoria.all %} {{ categoria }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   
+    
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Detalle actualizado del vestido</h4>
+
+    {% for copy in vestido.arriendo_set.all %}
+    <hr>
+    <p class="{% if copy.status == 'disponible' %} text-success {% elif copy.status == 'mantencion' %}  text-danger{% else %}  text-warning{% endif %}">{{ copy.get_status_display }}</p>
+
+    {% if copy.status != 'disponible' %}<p><strong>Debe ser devuelto el:</strong> {{copy.fecha_a_devolver}}</p>
+    {% endif %}
+    <p><strong>Fecha inicio arriendo:</strong> {{copy.fecha_inicio}}</p>
+    
+    <p class="text-muted"><strong>Fecha que devolvió:</strong> {{copy.id}}</p>
+
+    <p><strong>Dato creado:</strong> {{copy.creado}}</p>
+    <p><strong>Dato modificado:</strong> {{copy.fecha_inicio}}</p>
+
+    {% endfor %}
+  </div>
 
 {% endblock %}

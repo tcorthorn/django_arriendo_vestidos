@@ -6,12 +6,14 @@ urlpatterns = [
     path('vestidos/', views.VestidoListView.as_view(), name='vestidos'),
     path('clientes/', views.ClienteListView.as_view(), name='clientes'),
     path('proveedores/', views.ProveedorListView.as_view(), name='proveedores'),
+    path('arrendados/', views.ArrendadoListView.as_view(), name='arrendados'),
 
     path('vestidos/<pk>', views.VestidoDetailView.as_view(), name='detalle-vestido'),
     path('clientes/<pk>', views.ClienteDetailView.as_view(), name='detalle-cliente'),
     path('proveedores/<pk>', views.ProveedorDetailView.as_view(), name='detalle-proveedor'),
+    path('arriendos/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-arriendo'),
 
-    path('arrendados/', views.ArrendadoListView.as_view(), name='arrendados'),
+    
     path('disponibles/', views.DisponibleListView.as_view(), name='disponibles'),
     path('reservados/', views.ReservadoListView.as_view(), name='reservados'),
     path('mantencion/', views.MantencionListView.as_view(), name='mantencion'),
