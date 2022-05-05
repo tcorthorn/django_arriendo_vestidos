@@ -1,14 +1,14 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Vestidos </h1>
+    <h3>Vestidos </h3>
 
     {% if vestido_list  %}
     <ul>
 
       {% for vestido in vestido_list %}
       <li>
-        <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a> <strong>Sku  :</strong>{{vestido.sku}}
+        <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a> <strong>   Sku  :</strong>{{vestido.sku}}
       </li>
       {% endfor %}
 

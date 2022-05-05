@@ -108,13 +108,13 @@ class Cliente(models.Model):
 
 class Arriendo(models.Model):
     sku = models.ForeignKey('Vestido', help_text="VERIFIQUE el status del sku que identifica a este vestido particular", on_delete=models.CASCADE)
-    #sku = models.ManyToManyField('Vestido', help_text="Seleccione sku que identifica al vestido particular")
     cliente = models.ManyToManyField('Cliente', help_text="Seleccione el cliente que arrienda")
     fecha_inicio_arriendo = models.DateField(null=True, blank=True , help_text="Fecha inicio del arriendo")
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     fecha_que_devolvio = models.DateField(null=True, blank=True , help_text="Fecha que devolvió el vestido")
     valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
     fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
+    fecha_reservada = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo de reserva")
     creado= models.DateTimeField(auto_now_add=True)
     modificado= models.DateTimeField(auto_now_add=True)
     comentario = models.CharField(max_length=500, null=True,blank=True)
@@ -153,12 +153,6 @@ class Arriendo(models.Model):
         """
         return '%s' % (self.cliente, )
 
-    #def display_sku(self):
-        """"         Creates a string for the id. This is required to display id in Admin.        """
-
-        #return ', '.join([ vestido.sku for sku in self.vestido.all()[:3] ])
-    #display_sku.short_description = 'Sku'
-
     def display_cliente(self):
         """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
 
@@ -171,9 +165,6 @@ class Arriendo(models.Model):
         return ', '.join([ cliente.nombre for cliente in self.cliente.all()[:3] ])
     display_cliente2.short_description = 'Nombre'
     
-    
-
-
     class Meta:
-        ordering = ['comentario']
+        ordering = ['status']
 

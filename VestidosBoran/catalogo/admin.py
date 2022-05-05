@@ -41,9 +41,10 @@ class TallaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     resources_class=Talla
     search_fields=("nombre", )
 
-#class ArriendoInline(admin.TabularInline):
+class ArriendoInline(admin.TabularInline):
     """Defines format of inline book insertion (used in AuthorAdmin)"""
-    #model = Arriendo
+    model = Arriendo
+    extra= 0
 
 @admin.register(Vestido)
 class VestidoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
@@ -51,16 +52,18 @@ class VestidoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_filter = ('status','talla','categoria')
     resources_class=Vestido
     search_fields=('fecha_a_devolver', )
-    #inlines = [ArriendoInline]
+    inlines = [ArriendoInline]
 
 
 
 @admin.register(Arriendo)
 class ArriendoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display = ('sku','status','display_cliente','display_cliente2','fecha_inicio_arriendo','fecha_a_devolver','fecha_que_devolvio','valor_pagado','fecha_de_pago','creado', 'modificado','comentario')
+    list_display = ('sku','status','display_cliente','display_cliente2','fecha_inicio_arriendo','fecha_a_devolver','fecha_que_devolvio','valor_pagado','fecha_de_pago','fecha_reservada','creado', 'modificado','comentario')
+    fields = ['sku', 'status', 'cliente', ('fecha_inicio_arriendo', 'fecha_a_devolver','fecha_que_devolvio'),('valor_pagado','fecha_de_pago'),'fecha_reservada','comentario']
     list_filter = ('status','sku',)
     resources_class=Arriendo
-    search_fields=("cliente", )
+    search_fields=("sku", )
+
 
     
 
