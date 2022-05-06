@@ -1,6 +1,8 @@
+from logging import PlaceHolder
 from msilib.schema import Class
 from pickle import TRUE
 from tkinter import CASCADE
+from trace import Trace
 from venv import create
 from django.db import models
 from django.urls import reverse
@@ -13,10 +15,24 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
+    def get_absolute_url(self):
+        """         Devuelve el URL a una instancia particular de Vestido         """
+        return reverse('detalle-categoria', args=[str(self.id)])
+
+    class Meta:
+        ordering = ['nombre']
+
 class Talla(models.Model):
     talla = models.CharField(max_length=100, help_text="Ingrese la talla")
     def __str__(self):
-        return self.talla   
+        return self.talla
+
+    def get_absolute_url(self):
+        """         Devuelve el URL a una instancia particular de Vestido         """
+        return reverse('detalle-talla', args=[str(self.id)]) 
+
+    class Meta:
+        ordering = ['talla']  
 
 class Vestido(models.Model):
 
@@ -26,9 +42,9 @@ class Vestido(models.Model):
     sku = models.CharField(unique=True, max_length=7, help_text="Sku único para este vestido particular en toda la tienda: Máximo 7 dígitos")
     nombre= models.CharField(max_length=200, help_text="Nombre que identifique el vestido fácilmente")
     detalle = models.CharField(max_length=1000, help_text="Ingrese una descripción del vestido")
-    categoria = models.ManyToManyField(Categoria, help_text="Seleccione una categoría para este vestido")
-    talla = models.ManyToManyField(Talla, help_text="Seleccione una talla para este vestido")
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE,default='Otro' , help_text="Opcional")
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null= True, help_text="Seleccione una categoría para este vestido")
+    talla = models.ForeignKey(Talla, on_delete=models.SET_NULL, null=True ,help_text="Seleccione una talla para este vestido")
+    proveedor = models.ForeignKey('Proveedor',on_delete=models.SET_NULL, null=True ,default='Otro' , help_text="Opcional")
     LOAN_STATUS = (
         ('mantencion', 'mantención'),
         ('arrendado', 'arrendado'),
@@ -58,7 +74,7 @@ class Vestido(models.Model):
     display_talla.short_description = 'Talla'
 
     class Meta:
-        ordering = ['nombre']
+        ordering = ['sku']
 
 
 class Proveedor(models.Model):
@@ -85,15 +101,17 @@ class Cliente(models.Model):
     """
     nombre = models.CharField(max_length=100)
     apellidos= models.CharField(max_length=100)
-    rut =models.CharField(max_length=12)
+    rut =models.CharField(unique=True, max_length=11, help_text='Ingrese RUT sin puntos y con digito verificador', default="12875587-9")
     email = models.EmailField()
     telefono = models.CharField(max_length=10)
 
     def get_absolute_url(self):
-        """
-        Retorna la url para acceder a una instancia particular de un cliente.
-        """
+        """  Retorna la url para acceder a una instancia particular de un cliente.   """
+
         return reverse('detalle-cliente', args=[str(self.id)])
+
+    def __str__(self):
+        return self.nombre
 
     def __str__(self):
         """
@@ -103,18 +121,16 @@ class Cliente(models.Model):
 
     class Meta:
         ordering = ['apellidos']
-
    
-
 class Arriendo(models.Model):
-    sku = models.ForeignKey('Vestido', help_text="VERIFIQUE el status del sku que identifica a este vestido particular", on_delete=models.CASCADE)
+    sku = models.ForeignKey('Vestido', help_text="VERIFIQUE el status del sku que identifica a este vestido particular", on_delete=models.SET_NULL, null=True)
     cliente = models.ManyToManyField('Cliente', help_text="Seleccione el cliente que arrienda")
     fecha_inicio_arriendo = models.DateField(null=True, blank=True , help_text="Fecha inicio del arriendo")
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     fecha_que_devolvio = models.DateField(null=True, blank=True , help_text="Fecha que devolvió el vestido")
-    valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
-    fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
-    fecha_reservada = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo de reserva")
+    #valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
+    #fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
+    #fecha_reservada = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo de reserva")
     creado= models.DateTimeField(auto_now_add=True)
     modificado= models.DateTimeField(auto_now_add=True)
     comentario = models.CharField(max_length=500, null=True,blank=True)
@@ -168,3 +184,77 @@ class Arriendo(models.Model):
     class Meta:
         ordering = ['status']
 
+class Reserva(models.Model):
+    sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )
+    cliente = models.ManyToManyField(Cliente, help_text="Seleccione el cliente que reserva")
+    #rut = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, help_text= ' Ingrese Nombre de cliente que reserva' )
+    fecha_reserva = models.DateField(help_text='Fecha que reserva')
+
+    def __str__(self):
+        return self.sku
+
+    def __str__(self):
+        """
+        String para representar el Objeto Modelo
+        """
+        return '%s' % (self.cliente, )
+
+    def get_absolute_url(self):
+        """
+        Retorna la url para acceder a una instancia particular de una reserva.
+        """
+        return reverse('detalle-reserva', args=[str(self.id)])
+
+    def display_cliente(self):
+        """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
+
+        return ', '.join([ cliente.apellidos for cliente in self.cliente.all()[:3] ])
+    display_cliente.short_description = 'Apellidos'
+
+    def display_cliente2(self):
+        """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
+
+        return ', '.join([ cliente.nombre for cliente in self.cliente.all()[:3] ])
+    display_cliente2.short_description = 'Nombre'
+
+    class Meta():
+        verbose_name='reserva'
+        verbose_name_plural ='reservas'
+
+class Pago(models.Model):
+    sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )
+    cliente = models.ManyToManyField (Cliente, help_text= "Ingrese cliente que pagó")
+    monto_pagado = models.IntegerField(help_text="Ingrese el valor pagado")
+    fecha_de_pago = models. DateField(help_text="Ingrese fecha de pago")
+    comentario = models.CharField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return self.sku
+
+    def __str__(self):
+        """
+        String para representar el Objeto Modelo
+        """
+        return '%s' % (self.cliente, )
+
+    def get_absolute_url(self):
+        """
+        Retorna la url para acceder a una instancia particular de una reserva.
+        """
+        return reverse('detalle-reserva', args=[str(self.id)])
+
+    def display_cliente(self):
+        """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
+
+        return ', '.join([ cliente.apellidos for cliente in self.cliente.all()[:3] ])
+    display_cliente.short_description = 'Apellidos'
+
+    def display_cliente2(self):
+        """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
+
+        return ', '.join([ cliente.nombre for cliente in self.cliente.all()[:3] ])
+    display_cliente2.short_description = 'Nombre'
+
+    class Meta():
+        verbose_name='pago'
+        verbose_name_plural ='pagos'

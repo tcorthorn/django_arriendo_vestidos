@@ -8,7 +8,9 @@
 
       {% for vestido in vestido_list %}
       <li>
+        <br>
         <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a> <strong>   Sku  :</strong>{{vestido.sku}}
+        <br>
       </li>
       {% endfor %}
 

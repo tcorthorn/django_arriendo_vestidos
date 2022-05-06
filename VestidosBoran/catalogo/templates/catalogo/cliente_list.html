@@ -8,7 +8,8 @@
 
       {% for cliente in cliente_list %}
       <li>
-        <a href="{{ cliente.get_absolute_url }}">{{ cliente.apellidos }}</a> ({{cliente.nombre}}) 
+        <br>
+        <a href="{{ cliente.get_absolute_url }}">{{ cliente.apellidos }}</a> {{cliente.nombre}} <strong> RUT :  </strong> {{cliente.rut}}
       </li>
       {% endfor %}
 
