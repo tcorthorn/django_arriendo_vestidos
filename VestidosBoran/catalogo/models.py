@@ -46,10 +46,10 @@ class Vestido(models.Model):
     talla = models.ForeignKey(Talla, on_delete=models.SET_NULL, null=True ,help_text="Seleccione una talla para este vestido")
     proveedor = models.ForeignKey('Proveedor',on_delete=models.SET_NULL, null=True ,default='Otro' , help_text="Opcional")
     LOAN_STATUS = (
-        ('mantencion', 'mantención'),
-        ('arrendado', 'arrendado'),
-        ('disponible', 'disponible'),
-        ('reservado', 'reservado'),
+        ('mantencion', 'Mantención'),
+        ('arrendado', 'Arrendado'),
+        ('disponible', 'Disponible'),
+        ('reservado', 'Reservado'),
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
 
@@ -125,22 +125,22 @@ class Cliente(models.Model):
 class Arriendo(models.Model):
     sku = models.ForeignKey('Vestido', help_text="VERIFIQUE el status del sku que identifica a este vestido particular", on_delete=models.SET_NULL, null=True)
     cliente = models.ManyToManyField('Cliente', help_text="Seleccione el cliente que arrienda")
-    fecha_inicio_arriendo = models.DateField(null=True, blank=True , help_text="Fecha inicio del arriendo")
+    fecha_inicio= models.DateField(null=True, blank=True , help_text="Fecha inicio del arriendo")
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     fecha_que_devolvio = models.DateField(null=True, blank=True , help_text="Fecha que devolvió el vestido")
     #valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
     #fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
-    #fecha_reservada = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo de reserva")
+    #fecha_inicio = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo arriendo o mantencion")
     creado= models.DateTimeField(auto_now_add=True)
-    modificado= models.DateTimeField(auto_now_add=True)
+    modificado= models.DateTimeField(auto_now=True)
     comentario = models.CharField(max_length=500, null=True,blank=True)
 
     LOAN_STATUS = (
-        ('mantencion', 'mantención'),
-        ('arrendado', 'arrendado'),
-        ('disponible', 'disponible'),
+       #('mantencion', 'mantención'),
+        #('arrendado', 'arrendado'),
+        #('disponible', 'disponible'),
         ('reservado', 'reservado'),
-        ('devuelto', 'devuelto'),
+        #('devuelto', 'devuelto'),
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
     
@@ -182,13 +182,15 @@ class Arriendo(models.Model):
     display_cliente2.short_description = 'Nombre'
     
     class Meta:
-        ordering = ['status']
+        ordering = ['-fecha_inicio']
 
 class Reserva(models.Model):
     sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )
     cliente = models.ManyToManyField(Cliente, help_text="Seleccione el cliente que reserva")
     #rut = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, help_text= ' Ingrese Nombre de cliente que reserva' )
     fecha_reserva = models.DateField(help_text='Fecha que reserva')
+    reservado= models.CharField(max_length=10, default='Reservado')
+    #creado= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.sku

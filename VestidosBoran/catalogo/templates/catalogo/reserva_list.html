@@ -7,9 +7,9 @@
     <ul>
 
 
-      {% for vestido in reservado_list %}
+      {% for reservado in reservado_list %}
       <li>
-        <a href="{{ vestido.get_absolute_url }}">{{ vestido.nombre }}</a> ({{vestido.sku}})
+        <a href="{{ vestido.get_absolute_url }}">{{ vestido.nombre }}</a> {{reservado.sku}} {{reservado.fecha_reserva}}
       </li>
       {% endfor %}
 

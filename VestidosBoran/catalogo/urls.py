@@ -12,15 +12,15 @@ urlpatterns = [
     path('proveedores/<pk>', views.ProveedorDetailView.as_view(), name='detalle-proveedor'),
 
     path('arrendados/', views.ArrendadoListView.as_view(), name='arrendados'),
-    path('arriendos/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-arriendo'),
-
-    
     path('disponibles/', views.DisponibleListView.as_view(), name='disponibles'),
-    path('reservados/', views.ReservadoListView.as_view(), name='reservados'),
     path('mantencion/', views.MantencionListView.as_view(), name='mantencion'),
+    
+    path('reservas/', views.ReservaListView.as_view(), name='reservas'),
     path('devueltos/', views.DevueltoListView.as_view(), name='devueltos'),
-]
+    path('reservas/<pk>', views.ReservaDetailView.as_view(), name='detalle-reservas'),
+]     
+     #path('arriendos/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-arriendo'),
     #path('arrendados/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-vestido'),
     #path('disponibles/<pk>', views.DisponibleDetailView.as_view(), name='detalle-disponible'),
-    #path('reservados/<pk>', views.ReservadoDetailView.as_view(), name='detalle-reservado'),
+    
     #path('mantencion/<pk>', views.MantencionDetailView.as_view(), name='detalle-mantencion'),
