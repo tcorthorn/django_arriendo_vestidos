@@ -1,16 +1,16 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h3>Vestido: {{ vestido.nombre }}</h3>
+  <h3>Vestido  : {{ vestido.nombre }}</h3>
 
-  <p><strong>Proveedor:</strong> <a href="{% url 'detalle-proveedor' vestido.proveedor.id %}">{{ vestido.proveedor }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Status :</strong> {{ vestido.status}}</p>
+  <p><strong>Sku :</strong> {{ vestido.sku }}</p>
+  <p><strong>Talla :</strong> {{ vestido.talla }}</p>
+  <p><strong>Categoria :</strong> {{ vestido.categoria }}</p>
+  <p><strong>Detalle :</strong> {{ vestido.detalle }}</p>
 
-  <p><strong>Detalle:</strong> {{ vestido.detalle }}</p>
-  <p><strong>Talla:</strong> {% for talla in vestido.talla.all %} {{ talla }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-  <p><strong>Sku:</strong> {{ vestido.sku }}</p>
-  <p><strong>Categoria:</strong> {% for categoria in vestido.categoria.all %} {{ categoria }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-  
-    
+  <p><strong>Proveedor:</strong> <a href="{% url 'detalle-proveedor' vestido.proveedor.id %}">{{ vestido.proveedor }}</a></p> 
+
   <div style="margin-left:40px;margin-top:30px">
     <h4>Detalle actualizado del vestido</h4>
 

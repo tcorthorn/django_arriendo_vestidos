@@ -2,7 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo
+from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo, Reserva
+from django.views import generic
 
 def index(request):
     """
@@ -13,11 +14,12 @@ def index(request):
     clientes=Cliente.objects.all().count()
     proveedores=Proveedor.objects.all().count()
 
-    vestidos_disponibles=Arriendo.objects.filter(status='disponible').count()
-    vestidos_arrendados=Arriendo.objects.filter(status='arrendado').count()
-    vestidos_mantencion=Arriendo.objects.filter(status='mantencion').count()
-    vestidos_reservados=Arriendo.objects.filter(status='reservado').count()
-    vestidos_devueltos=Arriendo.objects.filter(status='devuelto').count()
+    vestidos_disponibles=Vestido.objects.filter(status='disponible').count()
+    vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
+    vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
+    vestidos_devueltos=Vestido.objects.filter(status='devuelto').count()
+
+    vestidos_reservados=Vestido.objects.filter(status='reservado').count()
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -35,7 +37,6 @@ def index(request):
         }
     )
 
-from django.views import generic
 
 class VestidoListView(generic.ListView):
     model = Vestido
@@ -45,12 +46,14 @@ class ClienteListView(generic.ListView):
     model = Cliente
     paginate_by = 10 
 
-class VestidoDetailView(generic.DetailView):
-    model = Vestido
-    paginate_by = 10
-
 class ProveedorListView(generic.ListView):
     model = Proveedor
+    paginate_by = 10
+
+# Detalle de la Clase
+
+class VestidoDetailView(generic.DetailView):
+    model = Vestido
     paginate_by = 10
 
 class ClienteDetailView(generic.DetailView):
@@ -60,6 +63,8 @@ class ClienteDetailView(generic.DetailView):
 class ProveedorDetailView(generic.DetailView):
     model = Proveedor
     paginate_by = 10
+
+    
 
 class ArrendadoDetailView(generic.DetailView):
     model = Arriendo
