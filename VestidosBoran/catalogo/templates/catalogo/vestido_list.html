@@ -1,16 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h3>Vestidos </h3>
-
+    <h2>Vestidos </h2>
+    <br>
     {% if vestido_list  %}
     <ul>
 
       {% for vestido in vestido_list %}
       <li>
-        <br>
+        
         <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a> <strong>   Sku  :</strong>{{vestido.sku}}
         <br>
+        <br>
+        
+
       </li>
       {% endfor %}
 

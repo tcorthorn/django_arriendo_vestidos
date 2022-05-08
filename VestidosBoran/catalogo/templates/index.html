@@ -12,15 +12,19 @@
     <li><strong>Vestidos:</strong> {{ vestidos }}</li>
     <li><strong>Clientes:</strong> {{ clientes }}</li>
     <li><strong>Proveedores:</strong> {{ proveedores }}</li>
-    <li></li>
+    <br>
 
     <li><strong>Vestidos disponibles:</strong> {{ vestidos_disponibles }}</li>
     <li><strong>Vestidos arrendados:</strong> {{ vestidos_arrendados }}</li>
     <li><strong>Vestidos en mantencion:</strong> {{ vestidos_mantencion }}</li>
+    <br>
     <li><strong>Vestidos reservados:</strong> {{ vestidos_reservados }}</li>
-    <li><strong>Vestidos devueltos:</strong> {{ vestidos_devueltos }}</li>
-  
-
+    
+    <!---<li><strong>Vestidos devueltos:</strong> {{ vestidos_devueltos }}</li> --->
+    <br>
+    <br>
+    <p>Tu has visitado esta página {{ num_visitas }}{% if num_visitas == 1 %} vez{% else %} 
+      veces{% endif %}.</p>
 
   </ul>
 

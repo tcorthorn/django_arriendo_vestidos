@@ -54,10 +54,10 @@ class Vestido(models.Model):
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
 
     LOAN_STATUS = (
-        ('reservado', 'Reservado'),
-        ('sin reserva', 'No reservado'),
+        ('Reservado', 'Reservado'),
+        ('Sin reserva', 'No reservado'),
     )
-    reservado = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='sin reserva', help_text='Disponibilidad del vestido')
+    reservado = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='Sin reserva', help_text='Disponibilidad del vestido')
 
     # ManyToManyField, porque una categoria puede contener muchos vestidos y un vestido puede cubrir varias categorías.
     # La clase Categoria ya ha sido definida, entonces podemos especificar el objeto arriba.

@@ -1,11 +1,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>En Mantencion</h1>
+    <h2>En Mantencion</h2>
 
     {% if mantencion_list %}
     <ul>
-
+      <br>
       {% for vestido in mantencion_list %}
       <li>
         <a href="{{ vestido.get_absolute_url }}">{{ vestido.nombre }}</a> ({{vestido.sku}})

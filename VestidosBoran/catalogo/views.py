@@ -18,8 +18,11 @@ def index(request):
     vestidos_disponibles=Vestido.objects.filter(status='disponible').count()
     vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
     vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
-    vestidos_devueltos=Vestido.objects.filter(status='devuelto').count()
-    vestidos_reservados=Vestido.objects.filter(reservado='reservado').count()
+    #vestidos_devueltos=Vestido.objects.filter(status='devuelto').count()
+    vestidos_reservados=Vestido.objects.filter(reservado='Reservado').count()
+
+    num_visitas = request.session.get('num_visitas', 0)
+    request.session['num_visitas'] = num_visitas + 1
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -33,7 +36,8 @@ def index(request):
         'vestidos_arrendados':vestidos_arrendados,
         'vestidos_mantencion':vestidos_mantencion,
         'vestidos_reservados':vestidos_reservados,
-        'vestidos_devueltos':vestidos_devueltos,
+        #'vestidos_devueltos':vestidos_devueltos,
+        'num_visitas':num_visitas,
         }
     )
 
