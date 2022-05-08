@@ -49,9 +49,15 @@ class Vestido(models.Model):
         ('mantencion', 'Mantención'),
         ('arrendado', 'Arrendado'),
         ('disponible', 'Disponible'),
-        ('reservado', 'Reservado'),
+        #('reservado', 'Reservado'),
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
+
+    LOAN_STATUS = (
+        ('reservado', 'Reservado'),
+        ('sin reserva', 'No reservado'),
+    )
+    reservado = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='sin reserva', help_text='Disponibilidad del vestido')
 
     # ManyToManyField, porque una categoria puede contener muchos vestidos y un vestido puede cubrir varias categorías.
     # La clase Categoria ya ha sido definida, entonces podemos especificar el objeto arriba.
@@ -143,6 +149,8 @@ class Arriendo(models.Model):
         #('devuelto', 'devuelto'),
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
+
+    
     
     def get_absolute_url(self):
         """         Devuelve el URL a una instancia particular de Arriendo         """
@@ -188,8 +196,7 @@ class Reserva(models.Model):
     sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )
     cliente = models.ManyToManyField(Cliente, help_text="Seleccione el cliente que reserva")
     #rut = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, help_text= ' Ingrese Nombre de cliente que reserva' )
-    fecha_reserva = models.DateField(help_text='Fecha que reserva')
-    reservado= models.CharField(max_length=10, default='Reservado')
+    fecha_reservada = models.DateField(help_text='Fecha que reserva')
     #creado= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -205,7 +212,7 @@ class Reserva(models.Model):
         """
         Retorna la url para acceder a una instancia particular de una reserva.
         """
-        return reverse('detalle-reserva', args=[str(self.id)])
+        return reverse('detalle-reservas', args=[str(self.id)])
 
     def display_cliente(self):
         """"         Creates a string for the cliente. This is required to display cliente in Admin.        """
@@ -222,6 +229,10 @@ class Reserva(models.Model):
     class Meta():
         verbose_name='reserva'
         verbose_name_plural ='reservas'
+
+    class Meta:
+        ordering = ['-fecha_reservada']
+        
 
 class Pago(models.Model):
     sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )

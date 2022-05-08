@@ -18,7 +18,7 @@ def index(request):
     vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
     vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
     vestidos_devueltos=Vestido.objects.filter(status='devuelto').count()
-    vestidos_reservados=Vestido.objects.filter(status='reservado').count()
+    vestidos_reservados=Vestido.objects.filter(reservado='reservado').count()
 
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -53,7 +53,7 @@ class ProveedorListView(generic.ListView):
 
 class VestidoDetailView(generic.DetailView):
     model = Vestido
-    paginate_by = 10
+    paginate_by = 2
 
 class ClienteDetailView(generic.DetailView):
     model = Cliente
@@ -71,7 +71,7 @@ class ArrendadoListView(generic.ListView):
 
 class ArrendadoDetailView(generic.DetailView):
     model = Arriendo
-    paginate_by = 10
+    paginate_by = 2
 
 class DisponibleListView(generic.ListView):
     model = Vestido
@@ -82,8 +82,8 @@ class DisponibleListView(generic.ListView):
 class ReservaListView(generic.ListView):
     model = Reserva
     paginate_by = 10
-    queryset = Vestido.objects.filter(status__icontains='reservado') #vestidos reservados
-    template_name = 'Reserva/reserva_list.html'  # Specify your own template name/location
+    queryset = Reserva.objects.filter(sku__icontains = "1") #vestidos reservados
+    #template_name = 'Reserva/reserva_list.html'  # Specify your own template name/location
 
 class ReservaDetailView(generic.DetailView):
     model = Reserva

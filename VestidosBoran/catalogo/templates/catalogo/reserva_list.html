@@ -1,15 +1,15 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Reservados</h1>
+    <h2>Reservados</h2>
 
-    {% if reservado_list %}
+    {% if reserva_list %}
     <ul>
 
 
-      {% for reservado in reservado_list %}
+      {% for reserva in reserva_list %}
       <li>
-        <a href="{{ vestido.get_absolute_url }}">{{ vestido.nombre }}</a> {{reservado.sku}} {{reservado.fecha_reserva}}
+        <a href="{{ reserva.get_absolute_url }}"><strong> Sku : </strong> {{ reserva.sku }}</a> <strong> Fecha reservada : </strong> {{reserva.fecha_reservada}}
       </li>
       {% endfor %}
 
