@@ -10,6 +10,8 @@
   <p><strong>Detalle :</strong> {{ vestido.detalle }}</p>
 
   <p><strong>Proveedor:</strong> <a href="{% url 'detalle-proveedor' vestido.proveedor.id %}">{{ vestido.proveedor }}</a></p> 
+  
+  <h3>Reservas : <strong>{{ vestido.reservado}}</strong> </h3>
 
   <div style="margin-left:40px;margin-top:30px">
     <h4>Detalle arriendo del vestido</h4>

@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo, Reserva
 from django.views import generic
+from datetime import date
 
 def index(request):
     """
@@ -82,8 +83,11 @@ class DisponibleListView(generic.ListView):
 class ReservaListView(generic.ListView):
     model = Reserva
     paginate_by = 10
-    queryset = Reserva.objects.filter(sku__icontains = "1") #vestidos reservados
+    
     #template_name = 'Reserva/reserva_list.html'  # Specify your own template name/location
+    #def get_queryset(self):
+        #return Reserva.objects.filter(fecha_reservada<'2022-05-27') #vestidos reservados
+
 
 class ReservaDetailView(generic.DetailView):
     model = Reserva
