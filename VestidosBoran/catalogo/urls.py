@@ -18,9 +18,15 @@ urlpatterns = [
     path('reservas/', views.ReservaListView.as_view(), name='reservas'),
     path('devueltos/', views.DevueltoListView.as_view(), name='devueltos'),
     path('reservas/<pk>', views.ReservaDetailView.as_view(), name='detalle-reservas'),
-]     
-     #path('arriendos/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-arriendo'),
-    #path('arrendados/<pk>', views.ArrendadoDetailView.as_view(), name='detalle-vestido'),
-    #path('disponibles/<pk>', views.DisponibleDetailView.as_view(), name='detalle-disponible'),
+   
+    #path('reservas/<pk>/renew/', views.ingreso_reserva, name='ingreso_reserva'),
+]
+   
+urlpatterns += [
+    path('cliente/create/', views.ClienteCreate.as_view(), name='cliente_create'),
+    path('cliente/<pk>/update/', views.ClienteUpdate.as_view(), name='cliente_update'),
+    path('cliente/<pk>/delete/', views.ClienteDelete.as_view(), name='cliente_delete'),
+]
     
-    #path('mantencion/<pk>', views.MantencionDetailView.as_view(), name='detalle-mantencion'),
+
+    

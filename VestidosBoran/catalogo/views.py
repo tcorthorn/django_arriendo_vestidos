@@ -114,3 +114,20 @@ class DevueltoListView(generic.ListView):
     paginate_by = 10
     queryset = Arriendo.objects.filter(status__icontains='devuelto') #vestidos devueltos
     template_name = 'Arriendo/devuelto_list.html'  # Specify your own template name/location
+
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Cliente
+
+class ClienteCreate(CreateView):
+    model = Cliente
+    fields = '__all__'
+    
+class ClienteUpdate(UpdateView):
+    model = Cliente
+    fields = '__all__'
+
+class ClienteDelete(DeleteView):
+    model = Cliente
+    success_url = reverse_lazy('clientes')
