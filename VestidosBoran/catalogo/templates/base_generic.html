@@ -22,18 +22,43 @@
       <div class="col-sm-2">
       {% block sidebar %}
       <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
+        <br>
+          <li><a href="{% url 'index' %}">HOME</a></li>
           <br>
-          <li><a href="{% url 'vestidos' %}">Todos los vestidos</a></li>
-          <li><a href="{% url 'clientes' %}">Todos los clientes</a></li>
-          <li><a href="{% url 'proveedores' %}">Todos los proveedores</a></li>
+          <li><a href="{% url 'vestidos' %}">Ver vestidos</a></li>
+          <li><a href="{% url 'clientes' %}">Ver clientes</a></li>
+          <li><a href="{% url 'proveedores' %}">Ver proveedores</a></li>
+          <br><br>
+          <li><a href="{% url 'arrendados' %}">Ver Arrendados</a></li>
+          <li><a href="{% url 'disponibles' %}">Ver Disponibles</a></li>
+          <li><a href="{% url 'mantencion' %}">Ver Mantencion</a></li>
           <br>
-          <li><a href="{% url 'arrendados' %}">Arrendados</a></li>
-          <li><a href="{% url 'disponibles' %}">Disponibles</a></li>
-          <li><a href="{% url 'mantencion' %}">Mantencion</a></li>
-          <br>
-          <li><a href="{% url 'reservas' %}">Reservados</a></li>
-         <!--- <li><a href="{% url 'devueltos' %}">Devueltos</a></li> --->
+          <li><a href="{% url 'reservas' %}">Ver Reservados</a></li>
+          <br><br><br>
+          <!---<li><a href="{% url 'cliente_create' %}">Crear Cliente</a></li>--->
+          <li><a href="{% url 'arriendo_create' %}">Crear Arriendo</a></li>
+          <li><a href="{% url 'reserva_create' %}">Crear Reseva</a></li>
+          <br><br>
+          <li><a href="{% url 'vestido_create' %}">Actualizar Status</a></li>
+
+
+         
+          <!--- <li><a href="{% url 'devueltos' %}">Devueltos</a></li>
+         {% if user.is_authenticated %}
+          <li>User: {{ user.get_username }}</li>
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+          {% endif %} 
+
+        {% if user.is_authenticated %}
+        <li>User: {{ user.get_username }}</li>
+          <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+         {% else %}
+          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+          {% endif %}  --->
+
       </ul>
      {% endblock %}
       </div>

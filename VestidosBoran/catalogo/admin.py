@@ -59,7 +59,7 @@ class VestidoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 @admin.register(Arriendo)
 class ArriendoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('sku','display_cliente','display_cliente2','fecha_inicio','fecha_a_devolver','fecha_que_devolvio','creado', 'modificado','comentario')
-    fields = ['sku', 'cliente', ('fecha_inicio', 'fecha_a_devolver','fecha_que_devolvio'),'comentario']
+    fields = ['sku','cliente', ('fecha_inicio', 'fecha_a_devolver','fecha_que_devolvio'),'comentario']
     list_filter = ('sku',)
     resources_class=Arriendo
     search_fields=("sku", )

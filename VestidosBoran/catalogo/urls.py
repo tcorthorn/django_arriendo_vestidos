@@ -18,6 +18,8 @@ urlpatterns = [
     path('reservas/', views.ReservaListView.as_view(), name='reservas'),
     path('devueltos/', views.DevueltoListView.as_view(), name='devueltos'),
     path('reservas/<pk>', views.ReservaDetailView.as_view(), name='detalle-reservas'),
+
+    
    
     #path('reservas/<pk>/renew/', views.ingreso_reserva, name='ingreso_reserva'),
 ]
@@ -28,5 +30,24 @@ urlpatterns += [
     path('cliente/<pk>/delete/', views.ClienteDelete.as_view(), name='cliente_delete'),
 ]
     
+urlpatterns += [
+    path('arrendados/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+]
 
-    
+urlpatterns += [
+    path('arriendo/create/', views.ArriendoCreate.as_view(), name='arriendo_create'),
+    path('arriendo/(<pk>/update/', views.ArriendoUpdate.as_view(), name='arriendo_update'),
+    path('arriendo/<pk>/delete/', views.ArriendoDelete.as_view(), name='arriendo_delete'),
+]
+
+urlpatterns += [
+    path('vestido/create/', views.VestidoCreate.as_view(), name='vestido_create'),
+    path('vestido/(<pk>/update/', views.VestidoUpdate.as_view(), name='vestido_update'),
+    path('vestido/<pk>/delete/', views.VestidoDelete.as_view(), name='vestido_delete'),
+]
+
+urlpatterns += [
+    path('reserva/create/', views.ReservaCreate.as_view(), name='reserva_create'),
+    path('reserva/(<pk>/update/', views.ReservaUpdate.as_view(), name='reserva_update'),
+    path('reserva/<pk>/delete/', views.ReservaDelete.as_view(), name='reserva_delete'),
+]

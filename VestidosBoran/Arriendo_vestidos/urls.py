@@ -22,13 +22,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include('catalogo.urls')),
+    path('catalogo/', include('catalogo.urls')),
     path('', RedirectView.as_view(url='/catalogo/', permanent=True)),
 ]
 #Add Django site authentication urls (for login, logout, password management)
 
 urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('cuentas/', include('django.contrib.auth.urls')),
 ]
 
 

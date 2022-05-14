@@ -7,6 +7,8 @@ from venv import create
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
+
 
 #from catalogo.admin import VestidoAdmin #Used to generate URLs by reversing the URL patterns
 
@@ -134,13 +136,9 @@ class Arriendo(models.Model):
     fecha_inicio= models.DateField(null=True, blank=True , help_text="Fecha inicio del arriendo")
     fecha_a_devolver = models.DateField(null=True, blank=True , help_text="Fecha que debe devolver el vestido")
     fecha_que_devolvio = models.DateField(null=True, blank=True , help_text="Fecha que devolvió el vestido")
-    #valor_pagado = models.IntegerField(help_text="Monto pagado por el arriendo", null=True,blank=True)
-    #fecha_de_pago = models.DateField(null=True, blank=True , help_text="Fecha que pagó el arriendo")
-    #fecha_inicio = models.DateField(null=True, blank=True , help_text="Fecha fecha comienzo arriendo o mantencion")
     creado= models.DateTimeField(auto_now_add=True)
     modificado= models.DateTimeField(auto_now=True)
     comentario = models.CharField(max_length=500, null=True,blank=True)
-
     LOAN_STATUS = (
        #('mantencion', 'mantención'),
         #('arrendado', 'arrendado'),
@@ -149,6 +147,8 @@ class Arriendo(models.Model):
         #('devuelto', 'devuelto'),
     )
     status = models.CharField(max_length=15, choices=LOAN_STATUS, blank=True, default='mantencion', help_text='Disponibilidad del vestido')
+    
+    #borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     
     

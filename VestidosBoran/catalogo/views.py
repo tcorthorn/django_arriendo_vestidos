@@ -5,6 +5,9 @@ from django.shortcuts import render
 from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo, Reserva
 from django.views import generic
 from datetime import date
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
 
 def index(request):
     """
@@ -116,9 +119,8 @@ class DevueltoListView(generic.ListView):
     template_name = 'Arriendo/devuelto_list.html'  # Specify your own template name/location
 
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from .models import Cliente
+
+
 
 class ClienteCreate(CreateView):
     model = Cliente
@@ -131,3 +133,55 @@ class ClienteUpdate(UpdateView):
 class ClienteDelete(DeleteView):
     model = Cliente
     success_url = reverse_lazy('clientes')
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    """
+    Generic class-based view listing books on loan to current user.
+    """
+    model = Arriendo
+    template_name ='catalogo/arriendo_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Arriendo.objects.filter(borrower=self.request.user).filter(sku='V000001').order_by('fecha_a_devolver')
+
+
+class ArriendoCreate(CreateView):
+    model = Arriendo
+    fields = '__all__'
+  
+class ArriendoUpdate(UpdateView):
+    model = Arriendo
+    fields = '__all__'
+
+class ArriendoDelete(DeleteView):
+    model = Arriendo
+    success_url = reverse_lazy('arrendados')
+
+
+class VestidoCreate(CreateView):
+    model = Vestido
+    fields = ['sku','status']
+
+class VestidoUpdate(UpdateView):
+    model = Vestido
+    fields = '__all__'
+
+class VestidoDelete(DeleteView):
+    model = Vestido
+    success_url = reverse_lazy('vestidos')
+
+
+class ReservaCreate(CreateView):
+    model = Reserva
+    fields = '__all__'
+
+class ReservaUpdate(UpdateView):
+    model = Reserva
+    fields = '__all__'
+
+class ReservaDelete(DeleteView):
+    model = Reserva
+    success_url = reverse_lazy('reservas')

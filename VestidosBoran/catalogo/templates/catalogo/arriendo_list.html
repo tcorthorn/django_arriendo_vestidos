@@ -10,6 +10,7 @@
       <li>
         <br>
         <a href="{{ arriendo.get_absolute_url }}"> {% for cliente in arriendo.cliente.all %} {{ cliente }}{% if not forloop.last %}, {% endif %}{% endfor %}</a> <strong>Fecha a devolver  :</strong> {{  arriendo.fecha_a_devolver }}
+        
       </li>
       {% endfor %}
 
