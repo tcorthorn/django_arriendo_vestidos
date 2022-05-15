@@ -30,9 +30,7 @@ urlpatterns += [
     path('cliente/<pk>/delete/', views.ClienteDelete.as_view(), name='cliente_delete'),
 ]
     
-urlpatterns += [
-    path('arrendados/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
-]
+
 
 urlpatterns += [
     path('arriendo/create/', views.ArriendoCreate.as_view(), name='arriendo_create'),

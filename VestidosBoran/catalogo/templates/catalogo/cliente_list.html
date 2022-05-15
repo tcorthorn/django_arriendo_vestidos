@@ -10,7 +10,7 @@
       <li>
         
         <a href="{{ cliente.get_absolute_url }}">{{ cliente.apellidos }}</a> {{cliente.nombre}} <strong> RUT :  </strong> {{cliente.rut}} 
-        <a href="{% url 'cliente_create'  %}">Añadir cliente</a>
+        
         <a href="{% url 'cliente_update' cliente.pk %}">Modificar cliente</a> 
         <a href="{% url 'cliente_delete' cliente.pk %}">Eliminar cliente</a> 
       <br>
