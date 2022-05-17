@@ -21,7 +21,6 @@ def index(request):
     vestidos_disponibles=Vestido.objects.filter(status='disponible').count()
     vestidos_arrendados=Vestido.objects.filter(status='arrendado').count()
     vestidos_mantencion=Vestido.objects.filter(status='mantencion').count()
-    #vestidos_devueltos=Vestido.objects.filter(status='devuelto').count()
     vestidos_reservados=Vestido.objects.filter(reservado='Reservado').count()
 
     num_visitas = request.session.get('num_visitas', 0)
@@ -39,7 +38,6 @@ def index(request):
         'vestidos_arrendados':vestidos_arrendados,
         'vestidos_mantencion':vestidos_mantencion,
         'vestidos_reservados':vestidos_reservados,
-        #'vestidos_devueltos':vestidos_devueltos,
         'num_visitas':num_visitas,
         }
     )
@@ -57,6 +55,15 @@ class ProveedorListView(generic.ListView):
     model = Proveedor
     paginate_by = 10
 
+class ReservaListView(generic.ListView):
+    model = Reserva
+    paginate_by = 10
+
+class ArriendoListView(generic.ListView):
+    model = Arriendo
+    paginate_by = 10
+
+
 # Detalle de la Clase
 
 class VestidoDetailView(generic.DetailView):
@@ -71,15 +78,22 @@ class ProveedorDetailView(generic.DetailView):
     model = Proveedor
     paginate_by = 10
 
+class ReservaDetailView(generic.DetailView):
+    model = Reserva
+    paginate_by = 10
+
+class ArriendoDetailView(generic.DetailView):
+    model = Arriendo
+    paginate_by = 10
+
+    
+    #Listas genericas de status de la clase Vestido
+
 class ArrendadoListView(generic.ListView):
     model = Vestido
     paginate_by = 10
     queryset = Vestido.objects.filter(status__icontains='arrendado') #vestidos arrendados
     template_name = 'Arriendo/arriendo_list.html'  # Specify your own template name/location
-
-class ArrendadoDetailView(generic.DetailView):
-    model = Arriendo
-    paginate_by = 2
 
 class DisponibleListView(generic.ListView):
     model = Vestido
@@ -87,40 +101,15 @@ class DisponibleListView(generic.ListView):
     queryset = Vestido.objects.filter(status__icontains='disponible') #vestidos disponibles
     template_name = 'Vestido/disponible_list.html'  # Specify your own template name/location
 
-class ReservaListView(generic.ListView):
-    model = Reserva
-    paginate_by = 10
-    
-    #template_name = 'Reserva/reserva_list.html'  # Specify your own template name/location
-    #def get_queryset(self):
-        #return Reserva.objects.filter(fecha_reservada<'2022-05-27') #vestidos reservados
-
-
-class ReservaDetailView(generic.DetailView):
-    model = Reserva
-    paginate_by = 10
-
 class MantencionListView(generic.ListView):
     model = Vestido
     paginate_by = 10
     queryset = Vestido.objects.filter(status__icontains='mantencion') #vestidos mantencion
     template_name = 'Vestido/mantencion_list.html'  # Specify your own template name/location
 
-#class ReservadoListView(generic.ListView):
-    #model = Arriendo
-    #paginate_by = 10
-    #queryset = Arriendo.objects.filter(status__icontains='reservado') #vestidos reservados
-    #template_name = 'Vestido/reservado_list.html'  # Specify your own template name/location
+    
 
-class DevueltoListView(generic.ListView):
-    model = Arriendo
-    paginate_by = 10
-    queryset = Arriendo.objects.filter(status__icontains='devuelto') #vestidos devueltos
-    template_name = 'Arriendo/devuelto_list.html'  # Specify your own template name/location
-
-
-
-
+#CRUD
 
 class ClienteCreate(CreateView):
     model = Cliente
@@ -133,19 +122,6 @@ class ClienteUpdate(UpdateView):
 class ClienteDelete(DeleteView):
     model = Cliente
     success_url = reverse_lazy('clientes')
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
-    """
-    Generic class-based view listing books on loan to current user.
-    """
-    model = Arriendo
-    template_name ='catalogo/arriendo_list_borrowed_user.html'
-    paginate_by = 10
-
-    def get_queryset(self):
-        return Arriendo.objects.filter(borrower=self.request.user).filter(sku='V000001').order_by('fecha_a_devolver')
 
 
 class ArriendoCreate(CreateView):
@@ -167,7 +143,7 @@ class VestidoCreate(CreateView):
 
 class VestidoUpdate(UpdateView):
     model = Vestido
-    fields = '__all__'
+    fields = ['sku','status']
 
 class VestidoDelete(DeleteView):
     model = Vestido

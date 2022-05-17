@@ -3,24 +3,27 @@ from . import views
 
 urlpatterns = [ 
     path('', views.index, name='index'),
+
     path('vestidos/', views.VestidoListView.as_view(), name='vestidos'),
     path('clientes/', views.ClienteListView.as_view(), name='clientes'),
     path('proveedores/', views.ProveedorListView.as_view(), name='proveedores'),
+    path('reservas/', views.ReservaListView.as_view(), name='reservas'),
+    path('arriendos/', views.ArriendoListView.as_view(), name='arriendos'),
+    
     
     path('vestidos/<pk>', views.VestidoDetailView.as_view(), name='detalle-vestido'),
     path('clientes/<pk>', views.ClienteDetailView.as_view(), name='detalle-cliente'),
     path('proveedores/<pk>', views.ProveedorDetailView.as_view(), name='detalle-proveedor'),
+    path('reservas/<pk>', views.ReservaDetailView.as_view(), name='detalle-reservas'),
+    path('arriendos/<pk>', views.ArriendoDetailView.as_view(), name='detalle-arriendos'),
 
     path('arrendados/', views.ArrendadoListView.as_view(), name='arrendados'),
     path('disponibles/', views.DisponibleListView.as_view(), name='disponibles'),
     path('mantencion/', views.MantencionListView.as_view(), name='mantencion'),
     
-    path('reservas/', views.ReservaListView.as_view(), name='reservas'),
-    path('devueltos/', views.DevueltoListView.as_view(), name='devueltos'),
-    path('reservas/<pk>', views.ReservaDetailView.as_view(), name='detalle-reservas'),
-
     
-   
+    #path('devueltos/', views.DevueltoListView.as_view(), name='devueltos'),
+    #path('arriendos/<pk>', views.ArrendadoaDetailView.as_view(), name='detalle-arriendos'),
     #path('reservas/<pk>/renew/', views.ingreso_reserva, name='ingreso_reserva'),
 ]
    
@@ -30,7 +33,6 @@ urlpatterns += [
     path('cliente/<pk>/delete/', views.ClienteDelete.as_view(), name='cliente_delete'),
 ]
     
-
 
 urlpatterns += [
     path('arriendo/create/', views.ArriendoCreate.as_view(), name='arriendo_create'),

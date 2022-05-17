@@ -9,7 +9,10 @@
       {% for vestido in vestido_list %}
       <li>
         
-        <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a> <strong>   Sku  :</strong>{{vestido.sku}}
+        <a href="{{ vestido.get_absolute_url }}"> {{ vestido.nombre }}</a>  &nbsp &nbsp
+        <strong> Sku :</strong>{{vestido.sku}}  &nbsp &nbsp
+        <strong> Status :</strong>{{vestido.status}} &nbsp &nbsp &nbsp
+        <a href="{% url 'vestido_update' vestido.pk %}">Modificar status</a> 
         <br>
         <br>
         

@@ -152,9 +152,9 @@ class Arriendo(models.Model):
 
     
     
-    def get_absolute_url(self):
-        """         Devuelve el URL a una instancia particular de Arriendo         """
-        return reverse('detalle-arriendo', args=[str(self.id)])
+    #def get_absolute_url(self):
+    """         Devuelve el URL a una instancia particular de Arriendo         """
+        #return reverse('arriendo_create', args=[str(self.id)])
 
     @property
     def is_overdue(self):
@@ -166,7 +166,7 @@ class Arriendo(models.Model):
         """
         Retorna la url para acceder a una instancia particular de un cliente.
         """
-        return reverse('detalle-arriendo', args=[str(self.id)])
+        return reverse('detalle-arriendos', args=[str(self.id)])
 
     def __str__(self):
         return self.sku
