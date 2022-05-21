@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from catalogo.forms import ReservaForm
+
 # Create your views here.
 
 from .models import Proveedor, Categoria, Vestido,  Cliente, Arriendo, Reserva
@@ -152,6 +154,7 @@ class VestidoDelete(DeleteView):
 
 class ReservaCreate(CreateView):
     model = Reserva
+    #form_class = ReservaForm
     fields = '__all__'
 
 class ReservaUpdate(UpdateView):
@@ -161,3 +164,4 @@ class ReservaUpdate(UpdateView):
 class ReservaDelete(DeleteView):
     model = Reserva
     success_url = reverse_lazy('reservas')
+

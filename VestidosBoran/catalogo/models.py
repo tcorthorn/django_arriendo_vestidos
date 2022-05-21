@@ -193,10 +193,9 @@ class Arriendo(models.Model):
         ordering = ['-fecha_inicio']
 
 class Reserva(models.Model):
-    sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text='Ingrese el Sku del vestido que reserva' )
-    cliente = models.ManyToManyField(Cliente, help_text="Seleccione el cliente que reserva")
-    #rut = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, help_text= ' Ingrese Nombre de cliente que reserva' )
-    fecha_reservada = models.DateField(help_text='Fecha que reserva')
+    sku = models.ForeignKey(Vestido,on_delete=models.SET_NULL, null=True, help_text="Seleccione el cliente que reserva" )
+    cliente = models.ManyToManyField(Cliente)
+    fecha_reservada = models.DateField()
     #creado= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
